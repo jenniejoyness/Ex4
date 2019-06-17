@@ -1,16 +1,15 @@
 package com.example.ex4;
-
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 public class TcpClient {
     private Socket socket;
     private static TcpClient s_instance = null;
+    PrintWriter out;
 
     public static TcpClient Instance() {
         if (s_instance == null){
-            return new TcpClient();
+            s_instance = new TcpClient();
         }
         return s_instance;
     }
@@ -22,6 +21,8 @@ public class TcpClient {
                 try {
                     socket = new Socket(ip, port);
                     System.out.println("connected");
+                    out = new PrintWriter(socket.getOutputStream());
+
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -35,20 +36,19 @@ public class TcpClient {
             @Override
             public void run() {
                 System.out.println("Started...");
-                PrintWriter out = null;
                 try {
-                    out = new PrintWriter(socket.getOutputStream());
-                    out.println(message + "\r\n");
+                    String messageStr = message + "\r\n";
+                    out.println(messageStr);
                     out.flush();
 
-                } catch (IOException e) {
+                } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                } finally {
+                }/* finally {
                     if (out != null) {
                         out.close();
                     }
-                }
+                }*/
             }
         };
         outThread.start();
