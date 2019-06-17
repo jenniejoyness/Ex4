@@ -31,9 +31,8 @@ public class JoyStickLogic {
     private LayoutParams params;
     private int stick_width, stick_height;
 
-    private float position_x = 0, position_y = 0;
-    int min_distance = 0;
-    private float distance = 0, angle = 0;
+    private float position_x = 0, position_y = 0, distance = 0, angle = 0;
+    private int min_distance = 0;
 
     private DrawCanvas draw;
     private Paint paint;

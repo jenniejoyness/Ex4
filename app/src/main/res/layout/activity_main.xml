@@ -4,25 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/ipText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="27dp"
+        android:layout_marginRight="27dp"
         android:text="ip:"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/ip"
-        app:layout_constraintTop_toTopOf="@+id/ip"
-        tools:layout_editor_absoluteX="58dp" />
+        app:layout_constraintEnd_toStartOf="@+id/ip"
+        app:layout_constraintTop_toTopOf="@+id/ip" />
 
     <TextView
         android:id="@+id/portText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
         android:text="port:"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/port"
-        app:layout_constraintTop_toTopOf="@+id/port"
-        tools:layout_editor_absoluteX="58dp" />
+        app:layout_constraintEnd_toStartOf="@+id/port"
+        app:layout_constraintTop_toTopOf="@+id/port" />
 
     <EditText
         android:id="@+id/ip"
@@ -64,8 +71,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@android:color/holo_green_light"
         android:onClick="connect"
+        android:padding="10dip"
         android:text="connect"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

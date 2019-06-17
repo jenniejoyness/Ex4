@@ -1,12 +1,12 @@
 package com.example.ex4;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
-
-import java.util.Random;
 
 public class JoyStickActivity extends AppCompatActivity {
     private JoyStickLogic js;
@@ -24,9 +24,15 @@ public class JoyStickActivity extends AppCompatActivity {
 
         RelativeLayout layout_joystick = (RelativeLayout) findViewById(R.id.layout_joystick);
 
+        Display screensize = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        screensize.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
         js = new JoyStickLogic(getApplicationContext(), layout_joystick, R.drawable.image_button);
         js.setStickSize(150, 150);
-        js.setLayoutSize(500, 500);
+        js.setLayoutSize(width, height /2);
         js.setLayoutAlpha(150);
         js.setStickAlpha(100);
         js.setOffset(110);
@@ -48,12 +54,9 @@ public class JoyStickActivity extends AppCompatActivity {
     public void sendData(float x, float y, String direction) {
 
         if (direction.equals(STICK_UP) || direction.equals(STICK_DOWN)) {
-
-            String massage = ElevatorPath + " " + String.valueOf(y);
-            TcpClient.Instance().sendMesssage(massage);
+            TcpClient.Instance().sendMesssage(ElevatorPath + " " + String.valueOf(y));
         } else {
-            String massage = AileronPath + " " + String.valueOf(x);
-            TcpClient.Instance().sendMesssage(massage);
+            TcpClient.Instance().sendMesssage(AileronPath + " " + String.valueOf(x));
         }
     }
 

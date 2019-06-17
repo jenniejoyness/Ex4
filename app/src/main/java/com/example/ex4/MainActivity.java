@@ -21,11 +21,9 @@ public class MainActivity extends AppCompatActivity {
         final int portInt = Integer.parseInt(port.getText().toString());
 
         TcpClient.Instance().connectToServer(ipStr, portInt);
-        //TcpClient.Instance().sendMesssage("set controls/flight/rudder -1");
         Intent intent = new Intent(this, JoyStickActivity.class);
         startActivity(intent);
 
     }
-
 
 }
