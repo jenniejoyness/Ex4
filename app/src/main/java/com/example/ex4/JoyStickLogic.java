@@ -13,10 +13,10 @@ import android.view.ViewGroup.LayoutParams;
 public class JoyStickLogic {
 
     private static final String STICK_NONE = "NONE";
-    private static final String STICK_UP = "UP";
-    private static final String STICK_RIGHT = "RIGHT";
-    private static final String STICK_DOWN = "DOWN";
-    private static final String STICK_LEFT = "LEFT";
+    private static final String UP = "UP";
+    private static final String RIGHT = "RIGHT";
+    private static final String DOWN = "DOWN";
+    private static final String LEFT = "LEFT";
 
     private float position_x = 0, position_y = 0, distance = 0, angle = 0;
     private int min_distance = 0;
@@ -55,20 +55,27 @@ public class JoyStickLogic {
         draw();
     }
 
-    public void drawStick(MotionEvent arg1) {
-        position_x = (int) (arg1.getX() - (params.width / 2));
-        position_y = (int) (arg1.getY() - (params.height / 2));
+    public void drawStick(MotionEvent motionEvent) {
+        
+        position_y = (int) (motionEvent.getY() - (params.height / 2));
+        position_x = (int) (motionEvent.getX() - (params.width / 2));
         distance = (float) Math.sqrt(Math.pow(position_x, 2) + Math.pow(position_y, 2));
+        
         angle = (float) cal_angle(position_x, position_y);
-        if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+        
+         if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+            draw.position(params.width / 2, params.height / 2);
+            draw();
+        }
+        else if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
             if (distance <= (params.width / 2) - OFFSET) {
-                draw.position(arg1.getX(), arg1.getY());
+                draw.position(motionEvent.getX(), motionEvent.getY());
                 draw();
                 touch_state = true;
             }
-        } else if (arg1.getAction() == MotionEvent.ACTION_MOVE && touch_state) {
+        }else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE && touch_state) {
             if (distance <= (params.width / 2) - OFFSET) {
-                draw.position(arg1.getX(), arg1.getY());
+                draw.position(motionEvent.getX(), motionEvent.getY());
                 draw();
             } else if (distance > (params.width / 2) - OFFSET) {
                 float x = (float) (Math.cos(Math.toRadians(cal_angle(position_x, position_y)))
@@ -82,13 +89,10 @@ public class JoyStickLogic {
             } else {
                 mLayout.removeView(draw);
             }
-        } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-            draw.position(params.width / 2, params.height / 2);
-            draw();
-        }
+        } 
     }
 
-    public float normalize(float x) {
+    public float normalization(float x) {
         float i = x + 200;
         float normal = i / 400;
         normal = (normal * 2) - 1;
@@ -101,7 +105,7 @@ public class JoyStickLogic {
                 return 1;
             if (position_x < -200)
                 return -1;
-            return normalize(position_x);
+            return normalization(position_x);
         }
         return 0;
     }
@@ -112,7 +116,7 @@ public class JoyStickLogic {
                 return -1;
             if (position_y < -200)
                 return +1;
-            return -(normalize(position_y));
+            return -(normalization(position_y));
         }
         return 0;
     }
@@ -121,21 +125,21 @@ public class JoyStickLogic {
         min_distance = minDistance;
     }
 
-    public String get4Direction() {
-        if (distance > min_distance && touch_state) {
+    public String getDirection() {
+        if (touch_state && distance > min_distance) {
             if (angle >= 225 && angle < 315) {
-                return STICK_UP;
+                return UP;
             } else if (angle >= 315 || angle < 45) {
-                return STICK_RIGHT;
+                return RIGHT;
             } else if (angle >= 45 && angle < 135) {
-                return STICK_DOWN;
+                return DOWN;
             } else if (angle >= 135 && angle < 225) {
-                return STICK_LEFT;
+                return LEFT;
             }
         } else if (distance <= min_distance && touch_state) {
             return STICK_NONE;
         }
-        return STICK_DOWN;
+        return DOWN;
     }
 
     public void setOffset(int offset) {
