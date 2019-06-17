@@ -1,4 +1,4 @@
-package com.example.ex4;
+ package com.example.ex4;
 
 import android.graphics.Point;
 import android.os.Bundle;
@@ -24,15 +24,9 @@ public class JoyStickActivity extends AppCompatActivity {
 
         RelativeLayout layout_joystick = (RelativeLayout) findViewById(R.id.layout_joystick);
 
-        Display screensize = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        screensize.getSize(size);
-        int width = size.x;
-        int height = size.y;
-
         js = new JoyStickLogic(getApplicationContext(), layout_joystick, R.drawable.image_button);
         js.setStickSize(150, 150);
-        js.setLayoutSize(width, height /2);
+        js.setLayoutSize(500, 500);
         js.setLayoutAlpha(150);
         js.setStickAlpha(100);
         js.setOffset(110);
@@ -52,10 +46,9 @@ public class JoyStickActivity extends AppCompatActivity {
     }
 
     public void sendData(float x, float y, String direction) {
-
         if (direction.equals(STICK_UP) || direction.equals(STICK_DOWN)) {
             TcpClient.Instance().sendMesssage(ElevatorPath + " " + String.valueOf(y));
-        } else {
+        } else if (direction.equals(STICK_RIGHT) || direction.equals(STICK_LEFT)) {
             TcpClient.Instance().sendMesssage(AileronPath + " " + String.valueOf(x));
         }
     }

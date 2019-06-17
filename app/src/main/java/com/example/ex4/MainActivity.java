@@ -14,6 +14,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        TcpClient.Instance().disConnect();
+    }
+
     public void connect(View view) {
         EditText ip = (EditText) findViewById(R.id.ip);
         final String ipStr =  ip.getText().toString();

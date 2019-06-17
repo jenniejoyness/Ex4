@@ -42,15 +42,21 @@ public class TcpClient {
                     out.flush();
 
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
-                }/* finally {
-                    if (out != null) {
-                        out.close();
-                    }
-                }*/
+                }
             }
         };
         outThread.start();
+    }
+
+    public void disConnect(){
+        if (out != null) {
+            out.close();
+        }
+        try {
+            socket.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
