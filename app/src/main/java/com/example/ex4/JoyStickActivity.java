@@ -1,9 +1,7 @@
  package com.example.ex4;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -32,13 +30,13 @@ public class JoyStickActivity extends AppCompatActivity {
     public void createJoyStick(){
 
         joyStick = new JoyStickLogic(getApplicationContext(), layout_joystick, R.drawable.image_button);
-        joyStick.initJoyStickPosition();
         joyStick.setOffset(110);
         joyStick.setMinimumDistance(50);
         joyStick.setLayoutAlpha(150);
         joyStick.setStickAlpha(100);
         joyStick.setStickSize(150, 150);
         joyStick.setLayoutSize(500, 500);
+        joyStick.initJoyStickPosition();
 
     }
 
